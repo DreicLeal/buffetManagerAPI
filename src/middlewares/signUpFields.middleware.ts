@@ -6,7 +6,7 @@ export const signUpFieldsMiddleware = (
   res: Response,
   next: NextFunction
 ) => {
-  const { password, name } = req.body;
+  const { password, name } = req["body"];
   if (!password || !name) {
     throw new AppError(
       "You need to fulfill all the required fields to create an account",

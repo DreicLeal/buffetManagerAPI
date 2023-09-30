@@ -3,8 +3,10 @@ import { DataSource, DataSourceOptions } from "typeorm";
 import { User } from "./entities/users.entity";
 import { Dish } from "./entities/dishes.entity";
 import { User_dish } from "./entities/users_dishes.entity";
-import {InitialMigration1696077059050} from "./migrations/1696077059050-InitialMigration"
- 
+import { InitialMigration1696077059050 } from "./migrations/1696077059050-InitialMigration";
+import { AdmFieldFixing1696081264702 } from "./migrations/1696081264702-admFieldFixing";
+import { ImproveDishesEntity1696106460396 } from "./migrations/1696106460396-improveDishesEntity";
+
 const setDataSourceConfig = (): DataSourceOptions => {
   const dbURL: string | undefined = process.env.DATABASE_URL;
   if (!dbURL) {
@@ -18,7 +20,9 @@ const setDataSourceConfig = (): DataSourceOptions => {
     logging: true,
     entities: [User, Dish, User_dish],
     migrations: [
-      InitialMigration1696077059050
+      InitialMigration1696077059050,
+      AdmFieldFixing1696081264702,
+      ImproveDishesEntity1696106460396,
     ],
   };
 };
