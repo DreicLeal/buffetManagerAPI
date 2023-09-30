@@ -6,6 +6,7 @@ export const userSchema = z.object({
   is_adm: z.boolean().default(false),
   name: z.string().min(3),
 });
+export const userReturnSchema = userSchema.omit({password: true})
 
 export const userLogin = z.object({
   name: z.string(),
