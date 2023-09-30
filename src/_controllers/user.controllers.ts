@@ -15,7 +15,7 @@ export const getUserController = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
-  const userId: string = req["user"];
+  const userId: string = req["user"].id;
 
   const returnedUSer = await getUserService(userId);
   return res.status(200).json(returnedUSer);
