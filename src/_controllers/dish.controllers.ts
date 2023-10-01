@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { TDish } from "../interfaces/dishes.interface";
-import { createDishService, getDishService } from "../_services/dish.services";
+import { createDishService, getDishService, getDishesService } from "../_services/dish.services";
 
 export const createDishController = async (
   req: Request,
@@ -18,6 +18,14 @@ export const getDishController = async (
 ): Promise<Response> => {
   const dishId: string = req.params.id;
   const foundDish = await getDishService(dishId);
+
+  return res.status(200).json(foundDish);
+};
+export const getDishesController = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
+  const foundDish = await getDishesService();
 
   return res.status(200).json(foundDish);
 };
