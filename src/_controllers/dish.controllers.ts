@@ -1,6 +1,12 @@
 import { Request, Response } from "express";
 import { TDish, TDishUpdate } from "../interfaces/dishes.interface";
-import { createDishService, getDishService, getDishesService, updateDishService } from "../_services/dish.services";
+import {
+  createDishService,
+  deleteDishService,
+  getDishService,
+  getDishesService,
+  updateDishService,
+} from "../_services/dish.services";
 
 export const createDishController = async (
   req: Request,
@@ -30,13 +36,22 @@ export const getDishesController = async (
   return res.status(200).json(foundDishes);
 };
 
-  export const updateDishController = async (
-    req: Request,
-    res: Response
-  ): Promise<Response> => {
-    const dishId: string = req.params.id;
-    const newData:TDishUpdate = req["body"]
-    const updatedDish = await updateDishService(dishId, newData);
-  
-    return res.status(200).json(updatedDish);
-  };
+export const updateDishController = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
+  const dishId: string = req.params.id;
+  const newData: TDishUpdate = req["body"];
+  const updatedDish = await updateDishService(dishId, newData);
+
+  return res.status(200).json(updatedDish);
+};
+export const deleteDishController = async (
+  req: Request,
+  res: Response
+) => {
+  const dishId: string = req.params.id;
+  await deleteDishService(dishId);
+
+  return res.status(204).json({});
+};
