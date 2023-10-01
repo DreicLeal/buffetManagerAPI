@@ -3,7 +3,8 @@ import { Dish } from "../entities/dishes.entity";
 import { User } from "../entities/users.entity";
 import { User_dish } from "../entities/users_dishes.entity";
 import AppError from "../errors";
-import { TDish } from "../interfaces/dishes.interface";
+import { TDish, TDishUpdate } from "../interfaces/dishes.interface";
+import { dishUpdateSchema } from "../schemas/dish.schema";
 
 export const createDishService = async (
   dishInfo: Omit<TDish, "id">,
@@ -39,10 +40,10 @@ export const createDishService = async (
   return newDish;
 };
 
-export const getDishService = async (dishId) => {
+export const getDishService = async (dishId:string) => {
   const dishRepository = dataSource.getRepository(Dish);
 
-  const foundDish = dishRepository.findOneBy({ id: dishId });
+  const foundDish = await dishRepository.findOneBy({ id: dishId });
   if (!foundDish) {
     throw new AppError("Dish not found", 404);
   }
@@ -60,4 +61,22 @@ export const getDishesService = async () => {
   }
 
   return allDishes;
+};
+
+export const updateDishService = async (dishId:string, newData:TDishUpdate) => {
+  const dishRepository = dataSource.getRepository(Dish);
+
+  const foundDish = await dishRepository.findOneBy({ id: dishId });
+  if (!foundDish) {
+    throw new AppError("Dish not found", 404);
+  }
+
+const updatedDish = dishRepository.create({
+  ...foundDish,
+  ...newData
+})
+await dishRepository.save(updatedDish)
+const returnUpdatedDish = dishUpdateSchema.parse(updatedDish)
+
+  return returnUpdatedDish;
 };
