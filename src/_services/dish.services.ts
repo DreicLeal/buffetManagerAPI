@@ -80,3 +80,15 @@ const returnUpdatedDish = dishUpdateSchema.parse(updatedDish)
 
   return returnUpdatedDish;
 };
+
+export const deleteDishService = async (dishId:string) => {
+  const dishRepository = dataSource.getRepository(Dish);
+
+  const foundDish = await dishRepository.findOneBy({ id: dishId });
+  if (!foundDish) {
+    throw new AppError("Dish not found", 404);
+  }
+  await dishRepository.remove(foundDish)
+
+  return foundDish;
+};
