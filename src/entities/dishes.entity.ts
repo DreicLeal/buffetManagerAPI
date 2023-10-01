@@ -25,11 +25,11 @@ export class Dish {
   @Column({ nullable: true, default: 4 })
   level: number;
 
-  @CreateDateColumn({ type: "date" })
-  created_at: string;
+  @CreateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
+  created_at: Date;
 
-  @UpdateDateColumn({ type: "date" })
-  updated_at: string;
+  @UpdateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
+  updated_at: Date;
 
   @OneToMany(() => User_dish, (user) => user.dishes)
   users: User_dish[];
