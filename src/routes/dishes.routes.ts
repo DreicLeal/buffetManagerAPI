@@ -4,6 +4,7 @@ import {
   createDishController,
   getDishController,
   getDishesController,
+  updateDishController,
 } from "../_controllers/dish.controllers";
 
 export const dishRouter: Router = Router();
@@ -11,5 +12,5 @@ export const dishRouter: Router = Router();
 dishRouter.post("", ensureAuthMiddleware, createDishController);
 dishRouter.get("/:id", getDishController);
 dishRouter.get("", getDishesController);
-dishRouter.patch("");
+dishRouter.patch("/:id", updateDishController);
 dishRouter.delete("");
