@@ -1,10 +1,17 @@
 import { Router } from "express";
 import { ensureAuthMiddleware } from "../middlewares/ensureAuth.middleware";
-import { createDishController } from "../_controllers/dish.controllers";
+import {
+  createDishController,
+  deleteDishController,
+  getDishController,
+  getDishesController,
+  updateDishController,
+} from "../_controllers/dish.controllers";
 
 export const dishRouter: Router = Router();
 
 dishRouter.post("", ensureAuthMiddleware, createDishController);
-dishRouter.get("");
-dishRouter.patch("");
-dishRouter.delete("");
+dishRouter.get("/:id", getDishController);
+dishRouter.get("", getDishesController);
+dishRouter.patch("/:id", updateDishController);
+dishRouter.delete("/:id", deleteDishController);
