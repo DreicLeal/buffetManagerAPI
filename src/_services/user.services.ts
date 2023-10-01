@@ -1,5 +1,7 @@
 import dataSource from "../data-source";
+import { Dish } from "../entities/dishes.entity";
 import { User } from "../entities/users.entity";
+import { User_dish } from "../entities/users_dishes.entity";
 import AppError from "../errors";
 import { TUser, TUserLogin } from "../interfaces/user.interface";
 import { userReturnSchema } from "../schemas/user.schema";
@@ -27,8 +29,48 @@ export const createUserService = async (
 
 export const getUserService = async (userId: string) => {
   const userRepository = dataSource.getRepository(User);
-  const userFound = await userRepository.findOneBy({ id: userId });
-  const userResponse = userReturnSchema.parse(userFound);
+  const userFound = await userRepository.findOne({
+    where: {
+      id: userId,
+    },
+    relations: {
+      dishes: true,
+    },
+  });
+  const userDishIds = userFound.dishes.map((userDish) => userDish.id);
+
+  const userDishRepository = dataSource.getRepository(User_dish);
+
+  const dishesId = await userDishRepository
+    .createQueryBuilder("user_dish")
+    .whereInIds(userDishIds)
+    .select("user_dish.dishesId", "dishId")
+    .getRawMany();
+
+  const dishIdArr = dishesId.map((row) => row.dishId);
+
+  const dishesRepository = dataSource.getRepository(Dish);
+
+  const dishes = await dishesRepository
+    .createQueryBuilder("dish")
+    .whereInIds(dishIdArr)
+    .select(["id", "name", "level", "category", "extra"])
+    .getRawMany();
+
+  if (!userFound) {
+    throw new AppError("User not found", 404);
+  }
+  const userResponse = userReturnSchema.parse({
+    id: userFound.id,
+    name: userFound.name,
+    dishes: dishes.map((dish) => ({
+      id: dish.id,
+      name: dish.name,
+      level: dish.level,
+      extra: dish.extra,
+      category: dish.category,
+    })),
+  });
 
   return userResponse;
 };
