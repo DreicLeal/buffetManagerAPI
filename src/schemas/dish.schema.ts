@@ -6,9 +6,15 @@ export const dishCreateSchema = z.object({
   level: z.number(),
   extra: z.boolean(),
   category: z.string().min(4),
-  created_at: z.string().or(z.date()),
-  updated_at: z.string().or(z.date()),
+  created_at: z.date(),
+  updated_at: z.date(),
 });
-export const dishUpdateSchema = dishCreateSchema.partial()
 
-export const dishesGetSchema = dishCreateSchema.array()
+export const returnUserDishSchema = dishCreateSchema.omit({
+  created_at: true,
+  updated_at: true,
+});
+export const dishUpdateSchema = dishCreateSchema.partial();
+
+export const dishesGetSchema = dishCreateSchema.array();
+export const returnUserDishArray = returnUserDishSchema.array();
