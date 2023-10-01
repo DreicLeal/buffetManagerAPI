@@ -38,3 +38,14 @@ export const createDishService = async (
 
   return newDish;
 };
+
+export const getDishService = async(dishId) => {
+const dishRepository = dataSource.getRepository(Dish)
+
+const foundDish = dishRepository.findOneBy({id:dishId})
+if(!foundDish){
+  throw new AppError("Dish not found", 404)
+}
+
+return foundDish
+}
