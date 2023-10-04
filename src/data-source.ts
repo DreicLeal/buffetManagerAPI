@@ -3,6 +3,7 @@ import { DataSource, DataSourceOptions } from "typeorm";
 import { User } from "./entities/users.entity";
 import { Dish } from "./entities/dishes.entity";
 import { User_dish } from "./entities/users_dishes.entity";
+import { Message } from "./entities/messages.entity";
 import { InitialMigration1696077059050 } from "./migrations/1696077059050-InitialMigration";
 import { AdmFieldFixing1696081264702 } from "./migrations/1696081264702-admFieldFixing";
 import { ImproveDishesEntity1696106460396 } from "./migrations/1696106460396-improveDishesEntity";
@@ -19,7 +20,7 @@ const setDataSourceConfig = (): DataSourceOptions => {
     url: dbURL,
     synchronize: false,
     logging: true,
-    entities: [User, Dish, User_dish],
+    entities: [User, Dish, User_dish, Message],
     migrations: [
       InitialMigration1696077059050,
       AdmFieldFixing1696081264702,
