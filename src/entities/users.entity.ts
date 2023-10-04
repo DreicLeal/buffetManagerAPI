@@ -8,6 +8,7 @@ import {
 } from "typeorm";
 import { getRounds, hashSync } from "bcryptjs";
 import { User_dish } from "./users_dishes.entity";
+import { Message } from "./messages.entity";
 
 @Entity("users")
 export class User {
@@ -34,4 +35,7 @@ export class User {
 
   @OneToMany(() => User_dish, (dishes) => dishes.user)
   dishes: User_dish[];
+
+  @OneToMany(()=> Message, (message)=> message.user)
+  messages: Message[]
 }
