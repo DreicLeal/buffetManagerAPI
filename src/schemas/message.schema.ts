@@ -6,5 +6,6 @@ export const messagePostSchema = z.object({
   checked: z.boolean().default(false),
   created_at: z.date(),
 });
+export const messageUpdateSchema = messagePostSchema.partial()
 
 export const messagesGetSchemaArr = messagePostSchema.array();
