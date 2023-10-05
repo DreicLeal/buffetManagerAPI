@@ -36,6 +36,6 @@ export class User {
   @OneToMany(() => User_dish, (dishes) => dishes.user)
   dishes: User_dish[];
 
-  @OneToMany(()=> Message, (message)=> message.user)
-  messages: Message[]
+  @OneToMany(() => Message, (messages) => messages.user, { nullable: true })
+  messages: Message[];
 }
