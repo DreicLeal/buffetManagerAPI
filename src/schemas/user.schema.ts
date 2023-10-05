@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { returnUserDishArray } from "./dish.schema";
+import { messagesGetSchemaArr } from "./message.schema";
 export const userSchema = z.object({
   id: z.string().uuid(),
   password: z
@@ -14,6 +15,7 @@ export const userReturnSchema = z.object({
   is_adm: z.boolean().default(false),
   name: z.string().min(3),
   dishes: returnUserDishArray,
+  messages: messagesGetSchemaArr,
 });
 
 export const userLogin = z.object({
