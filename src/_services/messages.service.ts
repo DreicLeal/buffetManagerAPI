@@ -2,7 +2,10 @@ import dataSource from "../data-source";
 import { Message } from "../entities/messages.entity";
 import { User } from "../entities/users.entity";
 import AppError from "../errors";
-import { messagePostSchema } from "../schemas/message.schema";
+import {
+  messagePostSchema,
+  messageUpdateSchema,
+} from "../schemas/message.schema";
 
 export const postMessageService = async (userId: string, content) => {
   const userRepository = dataSource.getRepository(User);
@@ -42,4 +45,19 @@ export const getMessagesService = async () => {
   }
 
   return allMessages;
+};
+
+export const updateMessageService = async (messageId: string, newContent) => {
+  const messagesRepository = dataSource.getRepository(Message);
+
+  const messageToUpdate = await messagesRepository.findOneBy({ id: messageId });
+
+  if (!messageToUpdate) {
+    throw new AppError("We can't found this message", 404);
+  }
+
+  messageToUpdate.checked = newContent.checked;
+  await messagesRepository.save(messageToUpdate);
+  const updateMessageResponse = messageUpdateSchema.parse(messageToUpdate);
+  return updateMessageResponse;
 };
