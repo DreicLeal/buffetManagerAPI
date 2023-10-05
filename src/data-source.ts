@@ -8,6 +8,7 @@ import { InitialMigration1696077059050 } from "./migrations/1696077059050-Initia
 import { AdmFieldFixing1696081264702 } from "./migrations/1696081264702-admFieldFixing";
 import { ImproveDishesEntity1696106460396 } from "./migrations/1696106460396-improveDishesEntity";
 import { UserDishesEntitiesFix1696113664794 } from "./migrations/1696113664794-user_dishesEntitiesFix";
+import { MessagesEntity1696440290256 } from "./migrations/1696440290256-MessagesEntity";
 
 const setDataSourceConfig = (): DataSourceOptions => {
   const dbURL: string | undefined = process.env.DATABASE_URL;
@@ -25,7 +26,8 @@ const setDataSourceConfig = (): DataSourceOptions => {
       InitialMigration1696077059050,
       AdmFieldFixing1696081264702,
       ImproveDishesEntity1696106460396,
-      UserDishesEntitiesFix1696113664794
+      UserDishesEntitiesFix1696113664794,
+      MessagesEntity1696440290256,
     ],
   };
 };
