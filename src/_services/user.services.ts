@@ -1,5 +1,6 @@
 import dataSource from "../data-source";
 import { Dish } from "../entities/dishes.entity";
+import { Message } from "../entities/messages.entity";
 import { User } from "../entities/users.entity";
 import { User_dish } from "../entities/users_dishes.entity";
 import AppError from "../errors";
@@ -35,8 +36,10 @@ export const getUserService = async (userId: string) => {
     },
     relations: {
       dishes: true,
+      messages:true,
     },
   });
+
   const userDishIds = userFound.dishes.map((userDish) => userDish.id);
 
   const userDishRepository = dataSource.getRepository(User_dish);
@@ -63,13 +66,15 @@ export const getUserService = async (userId: string) => {
   const userResponse = userReturnSchema.parse({
     id: userFound.id,
     name: userFound.name,
-    dishes: dishes.map((dish) => ({
+    dishes:
+     dishes.map((dish) => ({
       id: dish.id,
       name: dish.name,
       level: dish.level,
       extra: dish.extra,
       category: dish.category,
     })),
+    messages:userFound.messages
   });
 
   return userResponse;
