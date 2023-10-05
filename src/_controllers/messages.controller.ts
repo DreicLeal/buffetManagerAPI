@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import {
   getMessagesService,
   postMessageService,
+  updateMessageService,
 } from "../_services/messages.service";
 
 export const postMessageController = async (
@@ -20,4 +21,14 @@ export const getMessagesController = async (
 ): Promise<Response> => {
   const messages = await getMessagesService();
   return res.status(200).json(messages);
+};
+
+export const updateMessageController = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
+    const messageId = req.params.id
+    const newContent = req["body"]
+  const updatedMessage = await updateMessageService(messageId, newContent);
+  return res.status(200).json(updatedMessage);
 };
