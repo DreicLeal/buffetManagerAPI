@@ -14,8 +14,8 @@ export const userReturnSchema = z.object({
   id: z.string().uuid(),
   is_adm: z.boolean().default(false),
   name: z.string().min(3),
-  dishes: returnUserDishArray,
-  messages: messagesGetSchemaArr,
+  dishes: returnUserDishArray.optional(),
+  messages: messagesGetSchemaArr.optional(),
 });
 
 export const userLogin = z.object({
