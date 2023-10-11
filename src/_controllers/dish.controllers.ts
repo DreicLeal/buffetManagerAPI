@@ -12,8 +12,8 @@ export const createDishController = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
-  const dishInfo: TDish = req["body"];
-  const userInfo: string = req["user"].id;
+  const dishInfo: TDish = req.body;
+  const userInfo: string = req.user.id;
   const newDish = await createDishService(dishInfo, userInfo);
 
   return res.status(201).json(newDish);
@@ -41,7 +41,7 @@ export const updateDishController = async (
   res: Response
 ): Promise<Response> => {
   const dishId: string = req.params.id;
-  const newData: TDishUpdate = req["body"];
+  const newData: TDishUpdate = req.body;
   const updatedDish = await updateDishService(dishId, newData);
 
   return res.status(200).json(updatedDish);
