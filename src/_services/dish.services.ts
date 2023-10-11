@@ -92,3 +92,13 @@ export const deleteDishService = async (dishId:string) => {
 
   return foundDish;
 };
+
+export const deleteAllDishesService = async () => {
+  const dishRepository = dataSource.getRepository(Dish);
+
+  const foundDishes = await dishRepository.find();
+  if (foundDishes.length === 0) {
+    throw new AppError("Dish not found", 404);
+  }
+  await dishRepository.remove(foundDishes)
+};
