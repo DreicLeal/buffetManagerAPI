@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import {
+  deleteAllMessagesService,
   getMessagesService,
   postMessageService,
   updateMessageService,
@@ -32,3 +33,8 @@ export const updateMessageController = async (
   const updatedMessage = await updateMessageService(messageId, newContent);
   return res.status(200).json(updatedMessage);
 };
+
+export const deleteAllMessagesController = async(req:Request, res:Response) => {
+  await deleteAllMessagesService()
+  return res.status(204).json({})
+} 

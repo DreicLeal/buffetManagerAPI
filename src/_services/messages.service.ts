@@ -61,3 +61,16 @@ export const updateMessageService = async (messageId: string, newContent) => {
   const updateMessageResponse = messageUpdateSchema.parse(messageToUpdate);
   return updateMessageResponse;
 };
+
+export const deleteAllMessagesService = async () => {
+
+  const messagesRepository = dataSource.getRepository(Message)
+
+  const allMessages = await messagesRepository.find()
+
+  if(allMessages.length === 0){
+    throw new AppError("We don't have more messages", 404)
+  }
+
+  messagesRepository.remove(allMessages)
+}
