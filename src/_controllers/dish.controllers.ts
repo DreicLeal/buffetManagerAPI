@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { TDish, TDishUpdate } from "../interfaces/dishes.interface";
 import {
   createDishService,
+  deleteAllDishesService,
   deleteDishService,
   getDishService,
   getDishesService,
@@ -52,6 +53,15 @@ export const deleteDishController = async (
 ) => {
   const dishId: string = req.params.id;
   await deleteDishService(dishId);
+
+  return res.status(204).json({});
+};
+
+export const deleteAllDishesController = async (
+  req: Request,
+  res: Response
+) => {
+  await deleteAllDishesService();
 
   return res.status(204).json({});
 };
