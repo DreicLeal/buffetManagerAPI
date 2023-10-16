@@ -22,6 +22,9 @@ export class Dish {
   @Column({ default: false })
   extra: boolean;
 
+  @Column({ nullable:true, default:null})
+  timer: Date | null;
+
   @Column({ nullable: true, default: 4 })
   level: number;
 
