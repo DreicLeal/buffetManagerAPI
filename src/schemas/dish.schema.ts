@@ -7,6 +7,7 @@ export const dishCreateSchema = z.object({
   extra: z.boolean(),
   category: z.string().min(4),
   created_at: z.date(),
+  timer: z.date().nullable(),
   updated_at: z.date(),
 });
 

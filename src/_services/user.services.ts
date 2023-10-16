@@ -57,7 +57,7 @@ export const getUserService = async (userId: string) => {
   const dishes = await dishesRepository
     .createQueryBuilder("dish")
     .whereInIds(dishIdArr)
-    .select(["id", "name", "level", "category", "extra"])
+    .select(["id", "name", "level", "category", "extra", "timer"])
     .getRawMany();
 
   if (!userFound) {
@@ -73,6 +73,7 @@ export const getUserService = async (userId: string) => {
       level: dish.level,
       extra: dish.extra,
       category: dish.category,
+      timer: dish.timer,
     })),
     messages:userFound.messages
   });
