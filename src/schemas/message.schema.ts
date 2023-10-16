@@ -5,6 +5,7 @@ export const messagePostSchema = z.object({
   text: z.string(),
   checked: z.boolean().default(false),
   created_at: z.date(),
+  rocket: z.boolean(),
   user: z.string().optional(),
 });
 export const messageUpdateSchema = messagePostSchema.partial();
