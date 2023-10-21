@@ -57,6 +57,7 @@ export const updateMessageService = async (messageId: string, newContent) => {
   }
 
   messageToUpdate.checked = newContent.checked;
+  messageToUpdate.rocket = newContent.rocket
   await messagesRepository.save(messageToUpdate);
   const updateMessageResponse = messageUpdateSchema.parse(messageToUpdate);
   return updateMessageResponse;
